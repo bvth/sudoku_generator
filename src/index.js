@@ -10,28 +10,31 @@ class Cell extends  React.Component{
     }
 }
 
-const allValues=[];
+const colValues=[[],[],[],[],[],[],[],[],[]];
 class Row extends React.Component{
     constructor(props){
         super(props);
-        this.state={value:[]};
+        this.state={
+            rowValues:[]
+        };
     }
     genCell(rowID,cellId){
         let v = Math.floor((Math.random()*9)+1);
-        let foundRowValue = _.includes(this.state.value,v);
-        while (foundRowValue) {
+        let foundRowValue = _.includes(this.state.rowValues,v);
+        let foundColValue = _.includes(colValues[cellId],v);
+        while (foundRowValue||foundColValue) {
             v = Math.floor((Math.random()*9)+1);
-            foundRowValue = _.includes(this.state.value,v);
+            foundRowValue = _.includes(this.state.rowValues,v);
+            foundColValue = _.includes(colValues[cellId],v);
         }
-        this.state.value.push(v);
-
         //store value of each row
-        allValues.push(this.state.value);
-        //check Array
-        // if([cellId+1]==9){
-        //     console.log(this.state.value);
-        //     console.log(allValues);
-        // }
+        this.state.rowValues.push(v);
+        //store value of each column
+        colValues[cellId].push(v)
+
+        if([cellId+1]==9){
+        //    allValues.push(this.state.rowValue);
+        }
         return <Cell id={rowID+""+[cellId+1]} value={v} key={cellId}/>
     }
     render(){
@@ -44,7 +47,7 @@ class Row extends React.Component{
         )
     }
 }
-
+console.log(colValues);
 class Box extends React.Component{
     render(){
         return(
