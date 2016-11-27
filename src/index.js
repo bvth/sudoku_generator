@@ -22,11 +22,13 @@ class Row extends React.Component{
         let v = Math.floor((Math.random()*9)+1);
         let foundRowValue = _.includes(this.state.rowValues,v);
         let foundColValue = _.includes(colValues[cellId],v);
+        //this is where it stuck
         while (foundRowValue||foundColValue) {
             v = Math.floor((Math.random()*9)+1);
             foundRowValue = _.includes(this.state.rowValues,v);
             foundColValue = _.includes(colValues[cellId],v);
         }
+        //end of loop
         //store value of each row
         this.state.rowValues.push(v);
         //store value of each column
@@ -48,6 +50,7 @@ class Row extends React.Component{
     }
 }
 console.log(colValues);
+
 class Box extends React.Component{
     render(){
         return(
