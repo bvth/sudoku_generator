@@ -1,3 +1,4 @@
+//testing test1
 import React from "react";
 import {render} from "react-dom";
 import _ from 'lodash';
@@ -18,26 +19,32 @@ class Row extends React.Component{
             rowValues:[]
         };
     }
-    genCell(rowID,cellId){
+    genCell(rowID,colId){
         let v = Math.floor((Math.random()*9)+1);
         let foundRowValue = _.includes(this.state.rowValues,v);
-        let foundColValue = _.includes(colValues[cellId],v);
-        //this is where it stuck
+        let foundColValue = _.includes(colValues[colId],v);
+        let count = 0;
+//this is where it stuck
+        console.log(colValues[colId],colId,this.state.rowValues, rowID);
         while (foundRowValue||foundColValue) {
             v = Math.floor((Math.random()*9)+1);
             foundRowValue = _.includes(this.state.rowValues,v);
-            foundColValue = _.includes(colValues[cellId],v);
+            foundColValue = _.includes(colValues[colId],v);
+            count++;
+            if(count>=colValues[colId].length||count>=this.state.rowValues.length){
+            }
+            console.log(count,foundRowValue,foundColValue,v,[rowID]+[colId]);
         }
-        //end of loop
+//end of loop
         //store value of each row
         this.state.rowValues.push(v);
         //store value of each column
-        colValues[cellId].push(v)
+        colValues[colId].push(v)
 
-        if([cellId+1]==9){
+        if([colId+1]==9){
         //    allValues.push(this.state.rowValue);
         }
-        return <Cell id={rowID+""+[cellId+1]} value={v} key={cellId}/>
+        return <Cell id={rowID+""+[colId+1]} value={v} key={colId}/>
     }
     render(){
         return(
