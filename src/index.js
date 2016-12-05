@@ -11,7 +11,7 @@ class Cell extends  React.Component{
     }
 }
 
-const colValues=[[],[],[],[],[],[],[],[],[]];
+const table=[[],[],[],[],[],[],[],[],[]];
 const rowValue = [1,2,3,4,5,6,7,8,9];
 // const rowValue2 = [2,3,4,5,6,7,8,9,1];
 // const rowValue3 = [3,4,5,6,7,8,9,1,2];
@@ -55,17 +55,15 @@ class Row extends React.Component{
                 v<3 ? v+=6 : v-=3;
                 break;
             case (check2==0):
-                v<3 ? v=v+3 : v-=3;
+                v<6 ? v+=3 : v-=6;
                 break;
-            // default:
-            //     v=v;
-            //     break;
-
-
-
         }
-        console.log(v);
+        // console.log(v);
+        table[rowId-1].push(rowValue[v]);
         return rowValue[v];
+    }
+    scramble(){
+
     }
     genCell(rowId){
         return(
@@ -84,6 +82,7 @@ class Row extends React.Component{
         )
     }
 }
+console.log(table);
 class Box extends React.Component{
     render(){
         return(
