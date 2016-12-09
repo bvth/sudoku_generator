@@ -11,6 +11,7 @@ class Cell extends  React.Component{
     }
 }
 
+const rowValue = [];
 
 class Row extends React.Component{
     constructor(props){
@@ -19,43 +20,52 @@ class Row extends React.Component{
             rowValues:[]
         };
     }
-    genNo(arrayRowId){
-        let a,b,c;
-        if(arrayRowId==0){
-            a = Math.floor(Math.random()*9+1);
-        }
-        else if(arrayRowId==3 || arrayRowId ==6){
-            table[arrayRowId-3][0][0]+3>9? a=table[arrayRowId-3][0][0]-6:a = table[arrayRowId-3][0][0]+3;
-        }
-        else{
-            let choose;
-            if(rowCheck.length!=0){
-                if(rowCheck[rowCheck.length-1]==-2){
-                    choose=4;
+    genNo(rowId,i){
+        let v;
+        let check = rowId/3;
+        switch(true){
+            case (check <= 1):
+                v = i;
+                break;
+            case (check <= 2):
+                if(i+1>=rowValue.length){
+                    v= i+1-rowValue.length;
                 }
-                else
-                {
-                    choose=-2;
+                else{
+                    v=i+1;
                 }
-
-        }
-        for(var i = 0;i<3;i++){
-            a+6>9 ? b=a-3 : b=a+6;
-            b-3<1 ? c=b+6 : c=b-3;
-            table[arrayRowId][i].push(a);
-            table[arrayRowId][i].push(b);
-            table[arrayRowId][i].push(c);
-            ++a>9 ? a-=9 : a;
+                break;
+            case (check <= 3):
+                if(i+2>=rowValue.length){
+                    v=i+2-rowValue.length;
+                }
+                else{
+                    v=i+2;
+                }
+                break;
         }
 
+        let check2 = rowId%3;
+        switch (true) {
+            case (check2==2):
+                v<3 ? v+=6 : v-=3;
+                break;
+            case (check2==0):
+                v<6 ? v+=3 : v-=6;
+                break;
+        }
+        return rowValue[v];
+    }
+    scramble(){
+
+    }
+    genCell(rowId){
+        this.genNo(rowId);
         return(
-            _.map([...Array(3)],(x,i)=>
-                _.map([...Array(3)],(x,j)=>
-                    <Cell id={rowId+""+[i+1]} value={table[rowId-1][i][j]} key={i+""+j}/>
-                )
+            _.map([...Array(9)],(x,i)=>
+                <Cell id={rowId+""+[i+1]} value={this.genNo(rowId,i)} key={i}/>
             )
         )
-    }
     }
     render(){
         return(
@@ -67,7 +77,6 @@ class Row extends React.Component{
         )
     }
 }
-
 class Box extends React.Component{
     genNo(){
         _.times(9,function(){
