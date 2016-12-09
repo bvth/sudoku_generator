@@ -55,7 +55,7 @@ class Row extends React.Component{
                 )
             )
         )
-        }
+    }
     }
     render(){
         return(
