@@ -12,7 +12,7 @@ class Cell extends  React.Component{
 }
 
 const table=[[],[],[],[],[],[],[],[],[]];
-const rowValue = [1,2,3,4,5,6,7,8,9];
+const rowValue = [];
 // const rowValue2 = [2,3,4,5,6,7,8,9,1];
 // const rowValue3 = [3,4,5,6,7,8,9,1,2];
 class Row extends React.Component{
@@ -45,8 +45,6 @@ class Row extends React.Component{
                     v=i+2;
                 }
                 break;
-            // default:
-            //     v=rowValue[i];
         }
 
         let check2 = rowId%3;
@@ -58,14 +56,13 @@ class Row extends React.Component{
                 v<6 ? v+=3 : v-=6;
                 break;
         }
-        // console.log(v);
-        table[rowId-1].push(rowValue[v]);
         return rowValue[v];
     }
     scramble(){
 
     }
     genCell(rowId){
+        this.genNo(rowId);
         return(
             _.map([...Array(9)],(x,i)=>
                 <Cell id={rowId+""+[i+1]} value={this.genNo(rowId,i)} key={i}/>
@@ -82,9 +79,20 @@ class Row extends React.Component{
         )
     }
 }
-console.log(table);
 class Box extends React.Component{
+    genNo(){
+        _.times(9,function(){
+            let val = Math.floor((Math.random()*9)+1);
+            let checkValue = _.includes(rowValue,val);
+            while(checkValue){
+                val = Math.floor((Math.random()*9)+1);
+                checkValue = _.includes(rowValue,val);
+            }
+            rowValue.push(val);
+        })
+    }
     render(){
+        this.genNo();
         return(
             <div className="box">
                 {_.map([...Array(9)],(x,i)=>
@@ -94,5 +102,5 @@ class Box extends React.Component{
         )
     }
 }
-
+console.log(rowValue);
 render(<Box/>, document.getElementById('app'));
