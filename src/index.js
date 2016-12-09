@@ -12,14 +12,13 @@ class Cell extends  React.Component{
 }
 
 const rowValue = [];
-
 class Row extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            rowValues:[]
-        };
-    }
+    // constructor(props){
+    //     super(props);
+    //     this.state={
+    //         rowValues:[]
+    //     };
+    // }
     genNo(rowId,i){
         let v;
         let check = rowId/3;
@@ -55,9 +54,6 @@ class Row extends React.Component{
                 break;
         }
         return rowValue[v];
-    }
-    scramble(){
-
     }
     genCell(rowId){
         this.genNo(rowId);
