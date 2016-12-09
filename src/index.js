@@ -13,8 +13,7 @@ class Cell extends  React.Component{
 
 const table=[[],[],[],[],[],[],[],[],[]];
 const rowValue = [];
-// const rowValue2 = [2,3,4,5,6,7,8,9,1];
-// const rowValue3 = [3,4,5,6,7,8,9,1,2];
+
 class Row extends React.Component{
     constructor(props){
         super(props);
