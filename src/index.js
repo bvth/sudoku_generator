@@ -13,8 +13,7 @@ class Cell extends  React.Component{
 
 const table=[[],[],[],[],[],[],[],[],[]];
 const rowValue = [1,2,3,4,5,6,7,8,9];
-// const rowValue2 = [2,3,4,5,6,7,8,9,1];
-// const rowValue3 = [3,4,5,6,7,8,9,1,2];
+
 class Row extends React.Component{
     constructor(props){
         super(props);
@@ -25,6 +24,8 @@ class Row extends React.Component{
     genNo(rowId,i){
         let v;
         let check = rowId/3;
+
+        //check and create basic sequences start with 123 && 234 && 456
         switch(true){
             case (check <= 1):
                 v = i;
@@ -45,10 +46,9 @@ class Row extends React.Component{
                     v=i+2;
                 }
                 break;
-            // default:
-            //     v=rowValue[i];
         }
 
+        //shift indexes of  each sequence 3 cells
         let check2 = rowId%3;
         switch (true) {
             case (check2==2):
@@ -60,12 +60,38 @@ class Row extends React.Component{
         }
         // console.log(v);
         table[rowId-1].push(rowValue[v]);
-        return rowValue[v];
+        return table[rowId-1][i];
     }
     scramble(){
+        let ay,by,cy;
+        ay= Math.floor((Math.random()*9)+1);
+        switch (true) {
+            case (ay==1||ay==2||ay==3):
+                by=Math.floor((Math.random()*3)+1);
+                while(by==ay){
+                    by=Math.floor((Math.random()*3)+1);
+                }
+                cy=6-ay-by;
+                break;
+            case (ay==4||ay==5||ay==6):
+                by=Math.floor((Math.random()*3)+4);
+                while(by==ay){
+                    by=Math.floor((Math.random()*3)+4);
+                }
+                cy=15-ay-by;
+                break;
+            default:
+                by=Math.floor((Math.random()*3)+7);
+                while(by==ay){
+                    by=Math.floor((Math.random()*3)+7);
+                }
+                cy=24-ay-by;
 
+        }
+        console.log(ay,by,cy);
     }
     genCell(rowId){
+        this.scramble();
         return(
             _.map([...Array(9)],(x,i)=>
                 <Cell id={rowId+""+[i+1]} value={this.genNo(rowId,i)} key={i}/>
