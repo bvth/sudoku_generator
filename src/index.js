@@ -11,9 +11,7 @@ class Cell extends  React.Component{
     }
 }
 
-const table=[[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]]];
-// const rowValue = [1,2,3,4,5,6,7,8,9];
-const rowCheck=[];
+
 class Row extends React.Component{
     constructor(props){
         super(props);
@@ -39,20 +37,7 @@ class Row extends React.Component{
                 {
                     choose=-2;
                 }
-            }
-            else{
-                 choose = Math.random()<0.5 ? -2 : 4;
-            }
-             rowCheck.push(choose);
-            if(table[arrayRowId-1][0][0]+choose < 1){
-                a=table[arrayRowId-1][0][0]+7;
-            }
-            else if(table[arrayRowId-1][0][0]+choose > 9){
-                a=table[arrayRowId-1][0][0]-5;
-            }
-            else{
-                a=table[arrayRowId-1][0][0]+choose;
-            }
+
         }
         for(var i = 0;i<3;i++){
             a+6>9 ? b=a-3 : b=a+6;
@@ -63,12 +48,6 @@ class Row extends React.Component{
             ++a>9 ? a-=9 : a;
         }
 
-    }
-    scramble(rowId){
-
-    }
-    genCell(rowId){
-        this.genNo(rowId-1);
         return(
             _.map([...Array(3)],(x,i)=>
                 _.map([...Array(3)],(x,j)=>
@@ -76,6 +55,7 @@ class Row extends React.Component{
                 )
             )
         )
+        }
     }
     render(){
         return(
@@ -87,10 +67,21 @@ class Row extends React.Component{
         )
     }
 }
-console.log(table);
-console.log(rowCheck);
+
 class Box extends React.Component{
+    genNo(){
+        _.times(9,function(){
+            let val = Math.floor((Math.random()*9)+1);
+            let checkValue = _.includes(rowValue,val);
+            while(checkValue){
+                val = Math.floor((Math.random()*9)+1);
+                checkValue = _.includes(rowValue,val);
+            }
+            rowValue.push(val);
+        })
+    }
     render(){
+        this.genNo();
         return(
             <div className="box">
                 {_.map([...Array(9)],(x,i)=>
@@ -100,5 +91,5 @@ class Box extends React.Component{
         )
     }
 }
-
+console.log(rowValue);
 render(<Box/>, document.getElementById('app'));
