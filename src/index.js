@@ -11,7 +11,6 @@ class Cell extends  React.Component{
     }
 }
 
-const table=[[],[],[],[],[],[],[],[],[]];
 const rowValue = [];
 
 class Row extends React.Component{
