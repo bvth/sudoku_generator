@@ -11,10 +11,9 @@ class Cell extends  React.Component{
     }
 }
 
-const colValues=[[],[],[],[],[],[],[],[],[]];
-const rowValue = [1,2,3,4,5,6,7,8,9];
-// const rowValue2 = [2,3,4,5,6,7,8,9,1];
-// const rowValue3 = [3,4,5,6,7,8,9,1,2];
+const table=[[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]]];
+// const rowValue = [1,2,3,4,5,6,7,8,9];
+const rowCheck=[];
 class Row extends React.Component{
     constructor(props){
         super(props);
@@ -22,55 +21,59 @@ class Row extends React.Component{
             rowValues:[]
         };
     }
-    genNo(rowId,i){
-        let v;
-        let check = rowId/3;
-        switch(true){
-            case (check <= 1):
-                v = i;
-                break;
-            case (check <= 2):
-                if(i+1>=rowValue.length){
-                    v= i+1-rowValue.length;
+    genNo(arrayRowId){
+        let a,b,c;
+        if(arrayRowId==0){
+            a = Math.floor(Math.random()*9+1);
+        }
+        else if(arrayRowId==3 || arrayRowId ==6){
+            table[arrayRowId-3][0][0]+3>9? a=table[arrayRowId-3][0][0]-6:a = table[arrayRowId-3][0][0]+3;
+        }
+        else{
+            let choose;
+            if(rowCheck.length!=0){
+                if(rowCheck[rowCheck.length-1]==-2){
+                    choose=4;
                 }
-                else{
-                    v=i+1;
+                else
+                {
+                    choose=-2;
                 }
-                break;
-            case (check <= 3):
-                if(i+2>=rowValue.length){
-                    v=i+2-rowValue.length;
-                }
-                else{
-                    v=i+2;
-                }
-                break;
-            // default:
-            //     v=rowValue[i];
+            }
+            else{
+                 choose = Math.random()<0.5 ? -2 : 4;
+            }
+             rowCheck.push(choose);
+            if(table[arrayRowId-1][0][0]+choose < 1){
+                a=table[arrayRowId-1][0][0]+7;
+            }
+            else if(table[arrayRowId-1][0][0]+choose > 9){
+                a=table[arrayRowId-1][0][0]-5;
+            }
+            else{
+                a=table[arrayRowId-1][0][0]+choose;
+            }
+        }
+        for(var i = 0;i<3;i++){
+            a+6>9 ? b=a-3 : b=a+6;
+            b-3<1 ? c=b+6 : c=b-3;
+            table[arrayRowId][i].push(a);
+            table[arrayRowId][i].push(b);
+            table[arrayRowId][i].push(c);
+            ++a>9 ? a-=9 : a;
         }
 
-        let check2 = rowId%3;
-        switch (true) {
-            case (check2==2):
-                v<3 ? v+=6 : v-=3;
-                break;
-            case (check2==0):
-                v<3 ? v=v+3 : v-=3;
-                break;
-            // default:
-            //     v=v;
-            //     break;
+    }
+    scramble(rowId){
 
-
-
-        }
-        console.log(v);
-        return rowValue[v];
     }
     genCell(rowId){
+        this.genNo(rowId-1);
         return(
-            _.map([...Array(9)],(x,i)=>
-                <Cell id={rowId+""+[i+1]} value={this.genNo(rowId,i)} key={i}/>
+            _.map([...Array(3)],(x,i)=>
+                _.map([...Array(3)],(x,j)=>
+                    <Cell id={rowId+""+[i+1]} value={table[rowId-1][i][j]} key={i+""+j}/>
+                )
             )
         )
     }
@@ -84,6 +87,8 @@ class Row extends React.Component{
         )
     }
 }
+console.log(table);
+console.log(rowCheck);
 class Box extends React.Component{
     render(){
         return(
