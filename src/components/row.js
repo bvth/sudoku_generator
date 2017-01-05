@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Cell from './cell.js';
 
 export default class Row extends React.Component{
+    //generate numbers into arrays
     genNo(rowId,i){
         let rowValue = this.props.rowValue;
         let v;
@@ -40,11 +41,17 @@ export default class Row extends React.Component{
         }
         return rowValue[v];
     }
+    checkHideState(hideState){
+        if(hideState){
+            return Math.random()<0.6;
+        }
+    }
+    //generate cells
     genCell(rowId){
         this.genNo(rowId);
         return(
             _.map([...Array(9)],(x,i)=>
-                <Cell id={rowId+""+[i+1]} value={this.genNo(rowId,i)} key={i}/>
+                <Cell id={rowId+""+[i+1]} value={this.genNo(rowId,i)} hide={this.checkHideState(this.props.hide)} key={i}/>
             )
         )
     }

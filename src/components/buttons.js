@@ -7,11 +7,11 @@ export default class Buttons extends React.Component{
     }
     handleHide(event){
         event.preventDefault();
-        this.props.hideSudoku(true);
+        this.props.hideState==false ? this.props.hideSudoku(true) : this.props.hideSudoku(false);
     }
     render(){
         return (
-            <div>
+            <div className="buttons">
                 <button onClick={this.handleGen.bind(this)}>Generate</button>
                 <button onClick={this.handleHide.bind(this)}>Hide</button>
             </div>

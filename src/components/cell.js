@@ -1,17 +1,19 @@
 import React from "react";
 
 export default class Cell extends  React.Component{
+    genValue(){
+        let value = this.props.value;
+        if(this.props.hide){
+            // let hideChance = Math.random()<0.5;
+            return <input autoComplete="off" maxLength="1" />
+        }
+        else{
+            return value;
+        }
+    }
     render(){
-        // let random = Math.random()<this.props.level;
-        // if(random){
-            return (
-                <div className="cell" id={this.props.id}>{this.props.value}</div>
-            )
-        // }
-        // else{
-        //     return (
-        //         <div className="cell" id={this.props.id}></div>
-        //     )
-        // }
+        return(
+            <div className="cell" id={this.props.id}>{this.genValue()}</div>
+        )
     }
 }
