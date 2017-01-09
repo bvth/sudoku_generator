@@ -43,7 +43,7 @@ export default class Row extends React.Component{
     }
     checkHideState(hideState){
         if(hideState){
-            return Math.random()<0.6;
+            return Math.random()<0.5;
         }
     }
     //generate cells

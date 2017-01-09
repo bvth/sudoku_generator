@@ -1,20 +1,31 @@
+.box{
+    display: inline-block;
+}
 .row{
     margin: 0;
     display: block;
     height: 30px;
-    margin: 1px;
+    width: 100%;
+}
+.row:nth-child(3), .row:nth-child(6){
+    border-bottom: solid 2px grey;
 }
 .cell{
-    border: 1px solid black;
+    border: 1px solid grey;
     height: 30px;
     width: 30px;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
 }
+.cell:nth-child(3), .cell:nth-child(6){
+    border-right: solid 2px grey;
+}
 .cell input{
     border: none;
     height: 93%;
     width: inherit;
     text-align: center;
+    margin-top: 1px;
+    padding:0;
 }
